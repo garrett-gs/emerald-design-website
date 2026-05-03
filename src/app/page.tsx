@@ -38,7 +38,7 @@ export default function Home() {
               Emerald Design X Hospitality
             </p>
             <h1 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-ink">
-              Designed for the guest. <span className="italic text-emerald">Not the owner.</span>
+              Hospitality, <span className="italic text-emerald">by design.</span>
             </h1>
             <p className="mt-8 text-lg md:text-xl text-ink/80 leading-relaxed max-w-xl">
               Short-term rentals designed for the guest — not the owner. I help owners and investors turn properties into places that book solid, photograph beautifully, and earn real five-star reviews.

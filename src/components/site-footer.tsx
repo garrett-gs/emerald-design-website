@@ -11,7 +11,7 @@ export function SiteFooter() {
             {site.shortTagline}
           </p>
           <p className="mt-4 text-sm text-muted">
-            Designed for the guest. Not the owner.
+            Hospitality, by design.
           </p>
         </div>
         <div className="flex flex-col gap-3 text-sm">
