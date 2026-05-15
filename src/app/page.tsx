@@ -21,11 +21,10 @@ const services = [
 ];
 
 const testimonials: Array<{ quote: string; attribution: string }> = [
-  // Add real testimonials here as they come in.
-  // {
-  //   quote: "Quote from client.",
-  //   attribution: "Client First Name, Property Type or City",
-  // },
+  {
+    quote: "Misty has a unique ability to create spaces that feel both visually memorable and genuinely welcoming for guests. Her design vision completely elevated my property and helped transform it into a space that feels intentional, cohesive, and unlike a typical rental.",
+    attribution: "Casey V., Short-Term Rental Owner",
+  },
 ];
 
 export default function Home() {
