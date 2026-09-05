@@ -26,7 +26,6 @@ type Status = "idle" | "sending" | "sent" | "error";
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
-  const [mailtoFallback, setMailtoFallback] = useState("");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -62,13 +61,11 @@ export function ContactForm() {
         return;
       }
 
-      // Delivery isn't available — hand the visitor a prefilled email instead
-      // of losing what they wrote.
-      setMailtoFallback(buildMailto(values));
+      // Delivery failed. Leave the form populated so the visitor can retry
+      // without retyping.
       setStatus("error");
       setError("");
     } catch {
-      setMailtoFallback(buildMailto(values));
       setStatus("error");
       setError("");
     }
@@ -159,19 +156,15 @@ export function ContactForm() {
             error
           ) : (
             <>
-              Something went wrong sending that from here. You can{" "}
+              Something went wrong sending that — nothing you typed was lost, so
+              give it another try. If it keeps failing, you can{" "}
               <a
-                href={mailtoFallback}
+                href={site.bookingUrl}
+                target="_blank"
+                rel="noreferrer"
                 className="text-emerald hover:text-emerald-deep underline underline-offset-4"
               >
-                send it as an email instead
-              </a>{" "}
-              — everything you typed is already filled in — or write to{" "}
-              <a
-                className="text-emerald hover:text-emerald-deep underline underline-offset-4"
-                href={`mailto:${site.email}`}
-              >
-                {site.email}
+                book a consultation directly
               </a>
               .
             </>
@@ -190,26 +183,6 @@ export function ContactForm() {
       </div>
     </form>
   );
-}
-
-function buildMailto(values: Values) {
-  const subject = `Website inquiry from ${values.name || "a visitor"}`;
-  const body = [
-    `Name: ${values.name}`,
-    `Email: ${values.email}`,
-    values.phone && `Phone: ${values.phone}`,
-    `Where based: ${values.location}`,
-    `Property situation: ${values.situation}`,
-    "",
-    "About the property:",
-    values.details,
-    "",
-    values.referral && `How they heard: ${values.referral}`,
-  ]
-    .filter(Boolean)
-    .join("\n");
-
-  return `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 function Label({

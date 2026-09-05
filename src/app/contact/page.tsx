@@ -54,17 +54,19 @@ export default function ContactPage() {
           <aside className="md:col-span-5 md:sticky md:top-28 space-y-10">
             <div className="border-l-2 border-emerald/40 pl-6">
               <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft">
-                Prefer email?
+                Rather just talk?
               </p>
               <p className="mt-3 text-base text-ink/85 leading-relaxed">
-                You can also reach me directly at{" "}
+                Book a{" "}
                 <a
-                  href={`mailto:${site.email}`}
-                  className="text-emerald hover:text-emerald-deep"
+                  href={site.bookingUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-emerald hover:text-emerald-deep underline-offset-4 hover:underline"
                 >
-                  {site.email}
-                </a>
-                .
+                  virtual consultation
+                </a>{" "}
+                and we&apos;ll walk through the property together.
               </p>
             </div>
             <div className="border-l-2 border-emerald/40 pl-6">
