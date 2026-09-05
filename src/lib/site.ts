@@ -3,7 +3,7 @@ export const site = {
   tagline: "Hospitality, by design.",
   shortTagline: "Short-term rentals designed for the guest, not the owner.",
   founder: "Misty Schmidt",
-  portalUrl: "https://emerald-portal-rho.vercel.app/login",
+  portalUrl: "https://portal.emerald-dh.com/login",
   // Mailbox does not exist yet — emerald-dh.com has no MX records. Kept here
   // so it is ready to surface once mail is set up, but not shown on the site.
   email: "misty@emerald-dh.com",
