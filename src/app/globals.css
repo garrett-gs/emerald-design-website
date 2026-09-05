@@ -11,6 +11,8 @@
   --muted: #6b6b66;
   --border: #e8e2d5;
   --warm: #f0e9dc;
+  --font-display: "minion-pro", Georgia, "Times New Roman", serif;
+  --font-body: "avenir-next-lt-pro", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
 }
 
 @theme inline {
@@ -31,13 +33,13 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body);
   font-feature-settings: "kern", "liga";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 .font-display {
-  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  font-family: var(--font-display);
   font-feature-settings: "kern", "liga", "dlig";
 }

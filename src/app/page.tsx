@@ -33,9 +33,6 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-6 md:px-10 pt-12 md:pt-20 pb-16 md:pb-24">
         <div className="grid gap-10 md:gap-16 md:grid-cols-12 items-center">
           <div className="md:col-span-7">
-            <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft mb-6">
-              Emerald Design X Hospitality
-            </p>
             <h1 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-ink">
               Hospitality, <span className="italic text-emerald">by design.</span>
             </h1>

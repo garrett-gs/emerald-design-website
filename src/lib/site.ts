@@ -3,8 +3,8 @@ export const site = {
   tagline: "Hospitality, by design.",
   shortTagline: "Short-term rentals designed for the guest, not the owner.",
   founder: "Misty Schmidt",
-  portalUrl: "https://emerald-design-portal.vercel.app/login",
-  email: "hello@emeralddesignhospitality.com",
+  portalUrl: "https://emerald-portal-rho.vercel.app/login",
+  email: "misty@emerald-dh.com",
   instagram: "@emeralddesignhospitality",
   instagramUrl: "https://instagram.com/emeralddesignhospitality",
   serviceArea:

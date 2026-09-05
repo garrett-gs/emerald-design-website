@@ -10,41 +10,71 @@ const situations = [
   "I'm not sure yet — I want to talk through it",
 ];
 
+type Values = {
+  name: string;
+  email: string;
+  phone: string;
+  location: string;
+  situation: string;
+  details: string;
+  referral: string;
+  company: string;
+};
+
+type Status = "idle" | "sending" | "sent" | "error";
+
 export function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState("");
+  const [mailtoFallback, setMailtoFallback] = useState("");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (status === "sending") return;
+
     const data = new FormData(e.currentTarget);
-    const name = String(data.get("name") || "");
-    const email = String(data.get("email") || "");
-    const phone = String(data.get("phone") || "");
-    const location = String(data.get("location") || "");
-    const situation = String(data.get("situation") || "");
-    const details = String(data.get("details") || "");
-    const referral = String(data.get("referral") || "");
+    const values = Object.fromEntries(
+      ["name", "email", "phone", "location", "situation", "details", "referral", "company"].map(
+        (key) => [key, String(data.get(key) || "")]
+      )
+    ) as Values;
 
-    const subject = `Website inquiry from ${name || "a visitor"}`;
-    const lines = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      phone && `Phone: ${phone}`,
-      `Where based: ${location}`,
-      `Property situation: ${situation}`,
-      "",
-      "About the property:",
-      details,
-      "",
-      referral && `How they heard: ${referral}`,
-    ].filter(Boolean);
+    setStatus("sending");
+    setError("");
 
-    const body = lines.join("\n");
-    const url = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = url;
-    setSubmitted(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (response.ok && result.ok) {
+        setStatus("sent");
+        return;
+      }
+
+      // Validation problems come back with a message worth showing.
+      if (response.status === 400 && typeof result.error === "string") {
+        setError(result.error);
+        setStatus("error");
+        return;
+      }
+
+      // Delivery isn't available — hand the visitor a prefilled email instead
+      // of losing what they wrote.
+      setMailtoFallback(buildMailto(values));
+      setStatus("error");
+      setError("");
+    } catch {
+      setMailtoFallback(buildMailto(values));
+      setStatus("error");
+      setError("");
+    }
   }
 
-  if (submitted) {
+  if (status === "sent") {
     return (
       <div className="border border-emerald/30 bg-warm/30 rounded-sm p-8 md:p-10">
         <p className="font-display italic text-2xl md:text-3xl text-emerald leading-snug">
@@ -62,16 +92,11 @@ export function ContactForm() {
           </a>
           .
         </p>
-        <p className="mt-6 text-sm text-muted">
-          (If your email client didn&apos;t open automatically, you can also email{" "}
-          <a className="text-emerald" href={`mailto:${site.email}`}>
-            {site.email}
-          </a>{" "}
-          directly.)
-        </p>
       </div>
     );
   }
+
+  const sending = status === "sending";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -118,16 +143,73 @@ export function ContactForm() {
         />
       </div>
       <Field label="How did you hear about me?" name="referral" optional />
+
+      {/* Honeypot — hidden from people, catnip for bots. */}
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="company">Company</label>
+        <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
+
+      {status === "error" ? (
+        <div
+          role="alert"
+          className="border border-emerald/30 bg-warm/40 rounded-sm px-5 py-4 text-base text-ink/85 leading-relaxed"
+        >
+          {error ? (
+            error
+          ) : (
+            <>
+              Something went wrong sending that from here. You can{" "}
+              <a
+                href={mailtoFallback}
+                className="text-emerald hover:text-emerald-deep underline underline-offset-4"
+              >
+                send it as an email instead
+              </a>{" "}
+              — everything you typed is already filled in — or write to{" "}
+              <a
+                className="text-emerald hover:text-emerald-deep underline underline-offset-4"
+                href={`mailto:${site.email}`}
+              >
+                {site.email}
+              </a>
+              .
+            </>
+          )}
+        </div>
+      ) : null}
+
       <div className="pt-2">
         <button
           type="submit"
-          className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-emerald text-cream text-sm tracking-wide hover:bg-emerald-deep transition-colors"
+          disabled={sending}
+          className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-emerald text-cream text-sm tracking-wide hover:bg-emerald-deep transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          Send it over
+          {sending ? "Sending…" : "Send it over"}
         </button>
       </div>
     </form>
   );
+}
+
+function buildMailto(values: Values) {
+  const subject = `Website inquiry from ${values.name || "a visitor"}`;
+  const body = [
+    `Name: ${values.name}`,
+    `Email: ${values.email}`,
+    values.phone && `Phone: ${values.phone}`,
+    `Where based: ${values.location}`,
+    `Property situation: ${values.situation}`,
+    "",
+    "About the property:",
+    values.details,
+    "",
+    values.referral && `How they heard: ${values.referral}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  return `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 function Label({
