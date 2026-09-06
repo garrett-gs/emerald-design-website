@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookingFlow } from "@/components/booking-flow";
+import { BookingModal } from "@/components/booking-modal";
 import { BlockTiers } from "@/components/block-tiers";
 import { CtaButton } from "@/components/cta-button";
 import { site } from "@/lib/site";
@@ -149,42 +149,27 @@ export default async function ConsultationsPage() {
         </div>
       </section>
 
-      <section id="book" className="bg-warm/40 border-y border-border/60 scroll-mt-28">
-        {/* Jump targets so a card CTA lands here with that type selected. */}
-        {consults.map((c) => (
-          <span key={c.slug} id={`book-${c.slug}`} className="block scroll-mt-28" />
-        ))}
-        <div className="mx-auto max-w-5xl px-6 md:px-10 py-16 md:py-24">
-          <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft">
-            {booking ? "Pick a time" : "Opening soon"}
-          </p>
-          <h2 className="mt-4 font-display text-4xl md:text-5xl leading-[1.1] text-ink">
-            {booking ? "Book a consultation" : "Consultations open soon"}
-          </h2>
-          {booking ? (
-            <>
-              <p className="mt-6 text-base md:text-lg text-ink/75 leading-relaxed max-w-2xl">
-                Pick a time that works. Nothing is charged here — your slot is
-                held while payment comes through, and confirmed as soon as it
-                lands.
-              </p>
-              <div className="mt-10">
-                <BookingFlow consults={consults} />
-              </div>
-            </>
-          ) : (
-            <>
-              <p className="mt-6 text-base md:text-lg text-ink/75 leading-relaxed max-w-2xl">
-                Online booking opens shortly. In the meantime, tell me about the
-                space and we&apos;ll get a session on the calendar.
-              </p>
-              <div className="mt-10">
-                <CtaButton href="/contact">Get in touch</CtaButton>
-              </div>
-            </>
-          )}
-        </div>
-      </section>
+      {booking && (
+        <section className="bg-warm/40 border-y border-border/60">
+          <div className="mx-auto max-w-4xl px-6 md:px-10 py-16 md:py-20 text-center">
+            <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft">
+              Ready when you are
+            </p>
+            <h2 className="mt-4 font-display text-4xl md:text-5xl leading-[1.1] text-ink">
+              Pick a time
+            </h2>
+            <p className="mt-6 text-base md:text-lg text-ink/75 leading-relaxed max-w-2xl mx-auto">
+              Nothing is charged when you book — your slot is held while payment
+              comes through, and confirmed as soon as it lands.
+            </p>
+            <div className="mt-10">
+              <CtaButton href={`#book-${consults[0].slug}`}>
+                Book a consultation
+              </CtaButton>
+            </div>
+          </div>
+        </section>
+      )}
 
       {blocks.length > 0 && (
         <section id="blocks" className="bg-warm/50 border-y border-border/60 scroll-mt-28">
@@ -232,6 +217,7 @@ export default async function ConsultationsPage() {
           </Link>
         </div>
       </section>
+      {booking && consults.length > 0 && <BookingModal consults={consults} />}
     </>
   );
 }
