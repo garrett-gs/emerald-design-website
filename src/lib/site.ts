@@ -9,7 +9,7 @@ export const site = {
   instagram: "@emeralddesignhospitality",
   instagramUrl: "https://instagram.com/emeralddesignhospitality",
   serviceArea:
-    "the greater Kansas City area and the Midwest, plus select destination markets nationwide for the right project",
+    "the greater Omaha area and the Midwest, plus select destination markets nationwide for the right project",
 };
 
 export const nav = [
