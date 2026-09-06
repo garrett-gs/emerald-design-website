@@ -46,6 +46,7 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState("");
   const [chosen, setChosen] = useState<string | null>(null);
+  const [step, setStep] = useState<"time" | "details">("time");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [done, setDone] = useState<{ when: string; price: string; venmoHandle: string | null } | null>(null);
@@ -55,6 +56,7 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
     setLoading(true);
     setLoadError("");
     setChosen(null);
+    setStep("time");
     try {
       const from = new Date();
       const to = new Date();
@@ -135,7 +137,7 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
 
   return (
     <div>
-      {consults.length > 1 && (
+      {step === "time" && consults.length > 1 && (
         <div role="tablist" aria-label="Session type" className="flex flex-wrap gap-2">
           {consults.map((c) => {
             const on = c.slug === consult?.slug;
@@ -162,6 +164,7 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
         </div>
       )}
 
+      {step === "time" && (
       <div className="mt-8">
         <p className="text-sm text-ink/60">All times shown in Central.</p>
 
@@ -194,7 +197,10 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
                     <button
                       key={t.start}
                       type="button"
-                      onClick={() => setChosen(t.start)}
+                      onClick={() => {
+                        setChosen(t.start);
+                        setStep("details");
+                      }}
                       className={`px-4 py-2 rounded-sm border text-sm transition-colors ${
                         on
                           ? "bg-emerald text-cream border-emerald"
@@ -210,10 +216,11 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
           ))}
         </div>
       </div>
+      )}
 
-      {chosen && consult && (
+      {step === "details" && chosen && consult && (
         <form
-          className="mt-10 border-t border-border/70 pt-8 space-y-5"
+          className="space-y-5"
           onSubmit={async (e) => {
             e.preventDefault();
             if (submitting) return;
@@ -252,13 +259,27 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
             }
           }}
         >
-          <p className="font-display text-2xl text-ink">
-            {timeLabel(chosen)} on {dayLabel(chosen.slice(0, 10))}
-          </p>
-          <p className="text-base text-ink/70">
-            {consult.label} · {consult.duration}
-            {consult.price > 0 && <> · {formatPrice(consult.price, consult.currency)}</>}
-          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setStep("time");
+              setChosen(null);
+              setError("");
+            }}
+            className="inline-flex items-center gap-2 text-sm text-emerald hover:text-emerald-deep transition-colors"
+          >
+            ← Pick a different time
+          </button>
+
+          <div className="border border-border/70 bg-warm/40 rounded-sm px-5 py-4">
+            <p className="font-display text-xl md:text-2xl text-ink">
+              {timeLabel(chosen)} · {dayLabel(chosen.slice(0, 10))}
+            </p>
+            <p className="mt-1 text-sm text-ink/70">
+              {consult.label} · {consult.duration}
+              {consult.price > 0 && <> · {formatPrice(consult.price, consult.currency)}</>}
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <Field label="Your name" name="name" required />
@@ -324,7 +345,8 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
             {submitting ? "Holding your time…" : "Hold this time"}
           </button>
           <p className="text-sm text-muted">
-            Nothing is charged here. Your slot is held while payment comes through.
+            Nothing is charged here — your slot is held while payment comes
+            through, and confirmed as soon as it lands.
           </p>
         </form>
       )}

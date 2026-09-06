@@ -95,10 +95,6 @@ export function BookingModal({ consults }: { consults: Consult[] }) {
           </button>
         </div>
         <div className="px-6 md:px-10 py-8">
-          <p className="text-base text-ink/75 leading-relaxed mb-6">
-            Nothing is charged here — your slot is held while payment comes
-            through, and confirmed as soon as it lands.
-          </p>
           <BookingFlow consults={ordered} />
         </div>
       </div>
