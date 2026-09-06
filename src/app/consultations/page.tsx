@@ -98,6 +98,27 @@ export default async function ConsultationsPage() {
               </article>
             ))}
           </div>
+          {blocks.length > 0 && (
+            <div className="mt-10 border-t border-border/60 pt-8">
+              <p className="text-base md:text-lg text-ink/80 leading-relaxed max-w-3xl">
+                Most projects turn out to be bigger than one room.{" "}
+                {blocks
+                  .map(
+                    (b) =>
+                      `${b.blockHours} hours for ${formatPrice(b.price, b.currency)}`
+                  )
+                  .join(" or ")}{" "}
+                — used virtually or on-site, across as many sessions as it takes.{" "}
+                <Link
+                  href="#blocks"
+                  className="text-emerald hover:text-emerald-deep underline-offset-4 hover:underline whitespace-nowrap"
+                >
+                  See blocks →
+                </Link>
+              </p>
+            </div>
+          )}
+
           <p className="mt-8 text-sm text-muted max-w-2xl">
             On-site consultations cover {site.serviceArea}.
           </p>
@@ -162,7 +183,7 @@ export default async function ConsultationsPage() {
       </section>
 
       {blocks.length > 0 && (
-        <section className="bg-warm/50 border-y border-border/60">
+        <section id="blocks" className="bg-warm/50 border-y border-border/60 scroll-mt-28">
           <div className="mx-auto max-w-6xl px-6 md:px-10 py-20 md:py-28">
             <div className="max-w-2xl">
               <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft">
