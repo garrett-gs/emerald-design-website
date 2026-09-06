@@ -28,6 +28,7 @@ export type Consult = {
   slug: string;
   label: string;
   calEventTypeId: number | null;
+  blockHours: number | null;
   price: number;
   currency: string;
   duration: string;
@@ -42,6 +43,7 @@ export const fallbackConsults: Consult[] = [
     slug: "virtual-consultation",
     label: "Virtual Design Consultation",
     calEventTypeId: 6498495,
+    blockHours: null,
     price: 100,
     currency: "USD",
     duration: "60 minutes",

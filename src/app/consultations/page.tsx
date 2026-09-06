@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BookingFlow } from "@/components/booking-flow";
+import { BlockTiers } from "@/components/block-tiers";
 import { CtaButton } from "@/components/cta-button";
 import { site } from "@/lib/site";
 import { getConsults, formatPrice, bookingEnabled } from "@/lib/consults";
@@ -26,7 +27,9 @@ const steps = [
 ];
 
 export default async function ConsultationsPage() {
-  const consults = await getConsults();
+  const all = await getConsults();
+  const consults = all.filter((c) => !c.blockHours);
+  const blocks = all.filter((c) => c.blockHours);
   const booking = bookingEnabled();
   return (
     <>
@@ -157,6 +160,32 @@ export default async function ConsultationsPage() {
           )}
         </div>
       </section>
+
+      {blocks.length > 0 && (
+        <section className="bg-warm/50 border-y border-border/60">
+          <div className="mx-auto max-w-6xl px-6 md:px-10 py-20 md:py-28">
+            <div className="max-w-2xl">
+              <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft">
+                If one hour isn&apos;t enough
+              </p>
+              <h2 className="mt-4 font-display text-4xl md:text-5xl leading-[1.1] text-ink">
+                Buy time in a block
+              </h2>
+              <p className="mt-6 text-lg text-ink/80 leading-relaxed">
+                Most projects turn out to be bigger than one room. A block is
+                hours you hold onto — used virtually or on-site, across as many
+                sessions as it takes, at a better rate than booking one at a time.
+              </p>
+              <p className="mt-4 text-base text-ink/70 leading-relaxed">
+                Hours never expire.
+              </p>
+            </div>
+            <div className="mt-12">
+              <BlockTiers tiers={blocks} />
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="mx-auto max-w-4xl px-6 md:px-10 py-20 md:py-28 text-center">
         <h2 className="font-display text-4xl md:text-5xl leading-[1.1] text-ink">
