@@ -57,9 +57,14 @@ export async function createBooking(input: BookingInput) {
     metadata: {},
   };
 
+  // On-site event types require the property address as the booking location,
+  // not as free text in the notes.
+  if (input.address) {
+    body.location = { type: "attendeeAddress", address: input.address };
+  }
+
   const detail = [
     input.phone ? `Phone: ${input.phone}` : "",
-    input.address ? `Property address: ${input.address}` : "",
     input.notes ? `Notes: ${input.notes}` : "",
   ]
     .filter(Boolean)
