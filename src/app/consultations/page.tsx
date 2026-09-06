@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ConsultBooking } from "@/components/consult-booking";
 import { CtaButton } from "@/components/cta-button";
-import { consults, site } from "@/lib/site";
+import { site } from "@/lib/site";
+import { getConsults, formatPrice } from "@/lib/consults";
 
 export const metadata = {
   title: "Consultations",
@@ -24,7 +25,8 @@ const steps = [
   },
 ];
 
-export default function ConsultationsPage() {
+export default async function ConsultationsPage() {
+  const consults = await getConsults();
   return (
     <>
       <section className="mx-auto max-w-6xl px-6 md:px-10 pt-12 md:pt-20 pb-12 md:pb-16">
@@ -57,9 +59,11 @@ export default function ConsultationsPage() {
                   <h2 className="font-display text-3xl md:text-4xl text-ink leading-tight">
                     {consult.label}
                   </h2>
-                  <p className="font-display text-2xl md:text-3xl text-emerald whitespace-nowrap">
-                    {consult.price}
-                  </p>
+                  {consult.priceCents > 0 && (
+                    <p className="font-display text-2xl md:text-3xl text-emerald whitespace-nowrap">
+                      {formatPrice(consult.priceCents)}
+                    </p>
+                  )}
                 </div>
                 <p className="mt-1 text-xs uppercase tracking-[0.2em] text-emerald-soft">
                   {consult.duration}
@@ -128,7 +132,7 @@ export default function ConsultationsPage() {
             Choose the session that fits, and pay when you book.
           </p>
           <div className="mt-10">
-            <ConsultBooking />
+            <ConsultBooking consults={consults} />
           </div>
         </div>
       </section>

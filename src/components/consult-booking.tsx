@@ -2,26 +2,27 @@
 
 import { useEffect, useState } from "react";
 import { CalEmbed } from "@/components/cal-embed";
-import { consults } from "@/lib/site";
+import { formatPrice } from "@/lib/consults";
+import type { Consult } from "@/lib/site";
 
 // The card CTAs link to #book-virtual / #book-onsite so a visitor who picked a
 // format lands on that format's calendar rather than the default one.
-function slugFromHash() {
+function slugFromHash(consults: Consult[]) {
   if (typeof window === "undefined") return consults[0].slug;
   const match = window.location.hash.match(/^#book-(.+)$/);
   const found = consults.find((c) => c.slug === match?.[1]);
   return found ? found.slug : consults[0].slug;
 }
 
-export function ConsultBooking() {
+export function ConsultBooking({ consults }: { consults: Consult[] }) {
   const [slug, setSlug] = useState(consults[0].slug);
 
   useEffect(() => {
-    setSlug(slugFromHash());
-    const onHash = () => setSlug(slugFromHash());
+    setSlug(slugFromHash(consults));
+    const onHash = () => setSlug(slugFromHash(consults));
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
-  }, []);
+  }, [consults]);
 
   const active = consults.find((c) => c.slug === slug) ?? consults[0];
 
@@ -44,7 +45,9 @@ export function ConsultBooking() {
               }`}
             >
               {consult.label}
-              <span className="ml-2 opacity-70">{consult.price}</span>
+              {consult.priceCents > 0 && (
+                <span className="ml-2 opacity-70">{formatPrice(consult.priceCents)}</span>
+              )}
             </button>
           );
         })}
