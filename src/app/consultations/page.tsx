@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ConsultBooking } from "@/components/consult-booking";
+import { BookingFlow } from "@/components/booking-flow";
 import { CtaButton } from "@/components/cta-button";
 import { site } from "@/lib/site";
 import { getConsults, formatPrice, bookingEnabled } from "@/lib/consults";
@@ -136,12 +136,12 @@ export default async function ConsultationsPage() {
           {booking ? (
             <>
               <p className="mt-6 text-base md:text-lg text-ink/75 leading-relaxed max-w-2xl">
-                Choose the session that fits. Your slot is held as soon as you
-                book, and confirmed once payment comes through — details arrive
-                with your booking request.
+                Pick a time that works. Nothing is charged here — your slot is
+                held while payment comes through, and confirmed as soon as it
+                lands.
               </p>
               <div className="mt-10">
-                <ConsultBooking consults={consults} />
+                <BookingFlow consults={consults} />
               </div>
             </>
           ) : (
