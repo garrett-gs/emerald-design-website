@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CtaButton } from "@/components/cta-button";
 import { ImagePlaceholder } from "@/components/image-placeholder";
 
@@ -146,6 +147,16 @@ export default function ServicesPage() {
         <div className="mt-10">
           <CtaButton href="/contact">Start a conversation</CtaButton>
         </div>
+        <p className="mt-10 text-base text-ink/70 leading-relaxed max-w-2xl mx-auto">
+          Working on a single room rather than a whole property?{" "}
+          <Link
+            href="/consultations"
+            className="text-emerald hover:text-emerald-deep underline-offset-4 hover:underline"
+          >
+            Book a consultation
+          </Link>{" "}
+          instead — virtual or on-site.
+        </p>
       </section>
     </>
   );

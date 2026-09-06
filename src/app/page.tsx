@@ -122,6 +122,29 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="bg-warm/50 border-y border-border/60">
+        <div className="mx-auto max-w-6xl px-6 md:px-10 py-16 md:py-24">
+          <div className="grid gap-8 md:gap-16 md:grid-cols-12 items-center">
+            <div className="md:col-span-7">
+              <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft">
+                New
+              </p>
+              <h2 className="mt-4 font-display text-4xl md:text-5xl leading-[1.1] text-ink">
+                Not ready for a full project?
+              </h2>
+              <p className="mt-6 text-lg text-ink/80 leading-relaxed max-w-xl">
+                Book a consultation instead — virtual or on-site. One room, one
+                problem, one focused session. It&apos;s the smallest way to work with
+                me, and the fastest way to get unstuck.
+              </p>
+            </div>
+            <div className="md:col-span-5 md:justify-self-end">
+              <CtaButton href="/consultations">See consultations</CtaButton>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-emerald-deep text-cream">
         <div className="mx-auto max-w-4xl px-6 md:px-10 py-20 md:py-28">
           <p className="text-xs uppercase tracking-[0.2em] text-cream/60">What clients are saying</p>
