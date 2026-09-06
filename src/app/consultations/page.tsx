@@ -59,18 +59,20 @@ export default async function ConsultationsPage() {
                   <h2 className="font-display text-3xl md:text-4xl text-ink leading-tight">
                     {consult.label}
                   </h2>
-                  {consult.priceCents > 0 && (
+                  {consult.price > 0 && (
                     <p className="font-display text-2xl md:text-3xl text-emerald whitespace-nowrap">
-                      {formatPrice(consult.priceCents)}
+                      {formatPrice(consult.price, consult.currency)}
                     </p>
                   )}
                 </div>
                 <p className="mt-1 text-xs uppercase tracking-[0.2em] text-emerald-soft">
                   {consult.duration}
                 </p>
-                <p className="mt-5 font-display italic text-lg md:text-xl text-ink/75 leading-snug">
-                  {consult.summary}
-                </p>
+                {consult.summary && (
+                  <p className="mt-5 font-display italic text-lg md:text-xl text-ink/75 leading-snug">
+                    {consult.summary}
+                  </p>
+                )}
                 <p className="mt-4 text-base text-ink/80 leading-relaxed">
                   {consult.body}
                 </p>

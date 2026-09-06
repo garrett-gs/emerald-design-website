@@ -19,12 +19,13 @@ export const nav = [
   { href: "/contact", label: "Contact" },
 ];
 
-// Fallback copy, used only when the portal is unreachable. Live values are
-// edited in the portal and served from its public consultations endpoint.
+// Fallback copy, used only when the portal is unreachable. Mirrors what is
+// actually configured in the portal so a fallback render is not misleading.
 export type Consult = {
   slug: string;
   label: string;
-  priceCents: number;
+  price: number;
+  currency: string;
   duration: string;
   calLink: string;
   summary: string;
@@ -34,33 +35,14 @@ export type Consult = {
 
 export const fallbackConsults: Consult[] = [
   {
-    slug: "virtual",
-    label: "Virtual",
-    priceCents: 0,
+    slug: "virtual-consultation",
+    label: "Virtual Design Consultation",
+    price: 100,
+    currency: "USD",
     duration: "60 minutes",
     calLink: "misty-edh/virtual-consultation",
-    summary:
-      "A working video call about one room or one problem, wherever your property is.",
-    body: "Bring photos, measurements, and the thing that isn't working. We spend the hour on that — layout, color, what to keep, what to replace, what to spend on and what not to bother with.",
-    walkAway: [
-      "A clear direction for the space",
-      "Specific product and finish guidance",
-      "A written recap you can act on",
-    ],
-  },
-  {
-    slug: "onsite",
-    label: "On-site",
-    priceCents: 0,
-    duration: "90 minutes",
-    calLink: "misty-edh/onsite-consultation",
-    summary:
-      "Misty walks the space with you, in person, in the greater Kansas City area.",
-    body: "Some things you can't read from photos — how light moves through a room, how people actually walk through it, what the bones are hiding. We walk it together and talk through it in the space itself.",
-    walkAway: [
-      "Everything in the virtual consult, on site",
-      "A read on the property's bones and layout",
-      "A written recap you can act on",
-    ],
+    summary: "",
+    body: "A focused hour over video reviewing your space, with clear priorities and next steps to take away.",
+    walkAway: [],
   },
 ];

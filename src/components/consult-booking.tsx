@@ -45,8 +45,10 @@ export function ConsultBooking({ consults }: { consults: Consult[] }) {
               }`}
             >
               {consult.label}
-              {consult.priceCents > 0 && (
-                <span className="ml-2 opacity-70">{formatPrice(consult.priceCents)}</span>
+              {consult.price > 0 && (
+                <span className="ml-2 opacity-70">
+                  {formatPrice(consult.price, consult.currency)}
+                </span>
               )}
             </button>
           );

@@ -2,12 +2,12 @@ import { fallbackConsults, type Consult } from "@/lib/site";
 
 const PORTAL_URL = process.env.PORTAL_URL || "https://portal.emerald-dh.com";
 
-export function formatPrice(cents: number) {
-  if (!cents) return "";
-  return (cents / 100).toLocaleString("en-US", {
+export function formatPrice(amount: number, currency = "USD") {
+  if (!amount) return "";
+  return amount.toLocaleString("en-US", {
     style: "currency",
-    currency: "USD",
-    minimumFractionDigits: cents % 100 === 0 ? 0 : 2,
+    currency,
+    minimumFractionDigits: amount % 1 === 0 ? 0 : 2,
   });
 }
 
