@@ -23,8 +23,8 @@ export default async function RootLayout({
     ? formatPrice(Math.min(...sessions.map((c) => c.price)), sessions[0].currency)
     : "";
   const bannerMessage = from
-    ? `New: virtual and on-site design consultations, ${from}.`
-    : "New: virtual and on-site design consultations.";
+    ? `Virtual and on-site design consultations — ${from}`
+    : "Virtual and on-site design consultations";
   return (
     <html lang="en" className="h-full antialiased">
       <head>
