@@ -13,7 +13,7 @@ export const metadata = {
 const steps = [
   {
     title: "Book a time",
-    body: "Pick virtual or on-site, choose a slot, and pay when you book. That's the whole commitment — no proposal, no scoping call first.",
+    body: "Pick virtual or on-site and choose a slot. Your time is held while payment comes through — no proposal, no scoping call first.",
   },
   {
     title: "Send what you have",
@@ -136,7 +136,9 @@ export default async function ConsultationsPage() {
           {booking ? (
             <>
               <p className="mt-6 text-base md:text-lg text-ink/75 leading-relaxed max-w-2xl">
-                Choose the session that fits, and pay when you book.
+                Choose the session that fits. Your slot is held as soon as you
+                book, and confirmed once payment comes through — details arrive
+                with your booking request.
               </p>
               <div className="mt-10">
                 <ConsultBooking consults={consults} />

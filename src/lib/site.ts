@@ -6,6 +6,9 @@ export const site = {
   portalUrl: "https://portal.emerald-dh.com/login",
   email: "misty@emerald-dh.com",
   bookingUrl: "https://cal.com/misty-edh/virtual-consultation",
+  // Payment runs through Venmo until a card processor is connected in Cal.com.
+  // Bookings are held unconfirmed until payment lands.
+  venmoHandle: "",
   instagram: "@emeralddesignhospitality",
   instagramUrl: "https://instagram.com/emeralddesignhospitality",
   serviceArea:
