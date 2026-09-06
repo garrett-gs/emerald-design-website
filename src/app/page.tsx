@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CtaButton } from "@/components/cta-button";
 import { ImagePlaceholder } from "@/components/image-placeholder";
+import { getConsults, formatPrice } from "@/lib/consults";
 
 const services = [
   {
@@ -27,7 +28,13 @@ const testimonials: Array<{ quote: string; attribution: string }> = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const all = await getConsults();
+  const sessions = all.filter((c) => !c.blockHours);
+  const blocks = all.filter((c) => c.blockHours);
+  const from = sessions.length
+    ? formatPrice(Math.min(...sessions.map((c) => c.price)), sessions[0].currency)
+    : "";
   return (
     <>
       <section className="mx-auto max-w-6xl px-6 md:px-10 pt-12 md:pt-20 pb-16 md:pb-24">
@@ -133,10 +140,19 @@ export default function Home() {
                 Not ready for a full project?
               </h2>
               <p className="mt-6 text-lg text-ink/80 leading-relaxed max-w-xl">
-                Book a consultation instead — virtual or on-site. One room, one
-                problem, one focused session. It&apos;s the smallest way to work with
-                me, and the fastest way to get unstuck.
+                Book a consultation instead — virtual or on-site{from ? `, ${from}` : ""}.
+                One room, one problem, one focused session. It&apos;s the smallest
+                way to work with me, and the fastest way to get unstuck.
               </p>
+              {blocks.length > 0 && (
+                <p className="mt-4 text-base text-ink/70 leading-relaxed max-w-xl">
+                  Bigger job? Buy time in a block —{" "}
+                  {blocks
+                    .map((b) => `${b.blockHours} hours for ${formatPrice(b.price, b.currency)}`)
+                    .join(" or ")}
+                  .
+                </p>
+              )}
             </div>
             <div className="md:col-span-5 md:justify-self-end">
               <CtaButton href="/consultations">See consultations</CtaButton>
