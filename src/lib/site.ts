@@ -8,7 +8,7 @@ export const site = {
   bookingUrl: "https://cal.com/misty-edh/virtual-consultation",
   // Payment runs through Venmo until a card processor is connected in Cal.com.
   // Bookings are held unconfirmed until payment lands.
-  venmoHandle: "",
+  venmoHandle: "@emeralddesign",
   instagram: "@emeralddesignhospitality",
   instagramUrl: "https://instagram.com/emeralddesignhospitality",
   serviceArea:
