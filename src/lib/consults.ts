@@ -32,3 +32,10 @@ export async function getConsults(): Promise<Consult[]> {
     return fallbackConsults;
   }
 }
+
+// Bookings collect payment at the time of booking, so the scheduler stays shut
+// until Stripe is connected in Cal.com — otherwise every booking taken in the
+// meantime is an unpaid one. Flip CONSULT_BOOKING_ENABLED to "true" to open it.
+export function bookingEnabled() {
+  return process.env.CONSULT_BOOKING_ENABLED === "true";
+}

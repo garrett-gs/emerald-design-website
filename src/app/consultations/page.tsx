@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ConsultBooking } from "@/components/consult-booking";
 import { CtaButton } from "@/components/cta-button";
 import { site } from "@/lib/site";
-import { getConsults, formatPrice } from "@/lib/consults";
+import { getConsults, formatPrice, bookingEnabled } from "@/lib/consults";
 
 export const metadata = {
   title: "Consultations",
@@ -27,6 +27,7 @@ const steps = [
 
 export default async function ConsultationsPage() {
   const consults = await getConsults();
+  const booking = bookingEnabled();
   return (
     <>
       <section className="mx-auto max-w-6xl px-6 md:px-10 pt-12 md:pt-20 pb-12 md:pb-16">
@@ -87,7 +88,9 @@ export default async function ConsultationsPage() {
                   ))}
                 </ul>
                 <div className="mt-8 pt-2">
-                  <CtaButton href={`#book-${consult.slug}`}>Book {consult.label.toLowerCase()}</CtaButton>
+                  <CtaButton href={`#book-${consult.slug}`}>
+                    {booking ? `Book ${consult.label.toLowerCase()}` : "How to book"}
+                  </CtaButton>
                 </div>
               </article>
             ))}
@@ -125,17 +128,31 @@ export default async function ConsultationsPage() {
       <section id="book" className="bg-warm/40 border-y border-border/60 scroll-mt-28">
         <div className="mx-auto max-w-5xl px-6 md:px-10 py-16 md:py-24">
           <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft">
-            Pick a time
+            {booking ? "Pick a time" : "Opening soon"}
           </p>
           <h2 className="mt-4 font-display text-4xl md:text-5xl leading-[1.1] text-ink">
-            Book a consultation
+            {booking ? "Book a consultation" : "Consultations open soon"}
           </h2>
-          <p className="mt-6 text-base md:text-lg text-ink/75 leading-relaxed max-w-2xl">
-            Choose the session that fits, and pay when you book.
-          </p>
-          <div className="mt-10">
-            <ConsultBooking consults={consults} />
-          </div>
+          {booking ? (
+            <>
+              <p className="mt-6 text-base md:text-lg text-ink/75 leading-relaxed max-w-2xl">
+                Choose the session that fits, and pay when you book.
+              </p>
+              <div className="mt-10">
+                <ConsultBooking consults={consults} />
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="mt-6 text-base md:text-lg text-ink/75 leading-relaxed max-w-2xl">
+                Online booking opens shortly. In the meantime, tell me about the
+                space and we&apos;ll get a session on the calendar.
+              </p>
+              <div className="mt-10">
+                <CtaButton href="/contact">Get in touch</CtaButton>
+              </div>
+            </>
+          )}
         </div>
       </section>
 
