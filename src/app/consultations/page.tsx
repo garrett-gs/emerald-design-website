@@ -150,6 +150,10 @@ export default async function ConsultationsPage() {
       </section>
 
       <section id="book" className="bg-warm/40 border-y border-border/60 scroll-mt-28">
+        {/* Jump targets so a card CTA lands here with that type selected. */}
+        {consults.map((c) => (
+          <span key={c.slug} id={`book-${c.slug}`} className="block scroll-mt-28" />
+        ))}
         <div className="mx-auto max-w-5xl px-6 md:px-10 py-16 md:py-24">
           <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft">
             {booking ? "Pick a time" : "Opening soon"}

@@ -28,6 +28,12 @@ const timeLabel = (iso: string) =>
     minute: "2-digit",
   });
 
+function slugFromHash(consults: Consult[], fallback: string) {
+  if (typeof window === "undefined") return fallback;
+  const m = window.location.hash.match(/^#book-(.+)$/);
+  return consults.some((c) => c.slug === m?.[1]) ? (m![1] as string) : fallback;
+}
+
 export function BookingFlow({ consults }: { consults: Consult[] }) {
   const [slugState, setSlug] = useState(consults[0]?.slug ?? "");
   const consult = useMemo(
@@ -70,6 +76,14 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
   useEffect(() => {
     load();
   }, [load]);
+
+  // A card CTA links to #book-<slug>; honour it on arrival and on later clicks.
+  useEffect(() => {
+    const apply = () => setSlug((cur) => slugFromHash(consults, cur));
+    apply();
+    window.addEventListener("hashchange", apply);
+    return () => window.removeEventListener("hashchange", apply);
+  }, [consults]);
 
   // Misty's own intake questions, as configured on the event type in Cal.com.
   useEffect(() => {
