@@ -101,14 +101,14 @@ export default async function ConsultationsPage() {
           {blocks.length > 0 && (
             <div className="mt-10 border-t border-border/60 pt-8">
               <p className="text-base md:text-lg text-ink/80 leading-relaxed max-w-3xl">
-                Most projects turn out to be bigger than one room.{" "}
+                Need more than an hour? Buy time in a block —{" "}
                 {blocks
                   .map(
                     (b) =>
                       `${b.blockHours} hours for ${formatPrice(b.price, b.currency)}`
                   )
-                  .join(" or ")}{" "}
-                — used virtually or on-site, across as many sessions as it takes.{" "}
+                  .join(" or ")}
+                , at a better rate than booking one session at a time.{" "}
                 <Link
                   href="#blocks"
                   className="text-emerald hover:text-emerald-deep underline-offset-4 hover:underline whitespace-nowrap"
