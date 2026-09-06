@@ -25,7 +25,27 @@ export function BookingModal({ consults }: { consults: Consult[] }) {
     };
     apply();
     window.addEventListener("hashchange", apply);
-    return () => window.removeEventListener("hashchange", apply);
+
+    // Clicking a #book-* link when the hash already matches fires no
+    // hashchange, so open on the click itself as well.
+    const onClick = (e: MouseEvent) => {
+      const el = (e.target as HTMLElement | null)?.closest?.("a[href^='#book']");
+      if (!el) return;
+      const href = el.getAttribute("href") || "";
+      const m = href.match(/^#book-(.+)$/);
+      const found = consults.find((c) => c.slug === m?.[1]);
+      if (found || href === "#book") {
+        e.preventDefault();
+        setSlug(found ? found.slug : consults[0]?.slug ?? null);
+        history.replaceState(null, "", href);
+      }
+    };
+    document.addEventListener("click", onClick);
+
+    return () => {
+      window.removeEventListener("hashchange", apply);
+      document.removeEventListener("click", onClick);
+    };
   }, [consults]);
 
   useEffect(() => {
