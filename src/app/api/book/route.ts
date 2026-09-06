@@ -50,6 +50,12 @@ export async function POST(request: Request) {
   const phone = str("phone");
   const address = str("address");
   const notes = str("notes").slice(0, 4000);
+  const responses: Record<string, string> = {};
+  if (body.responses && typeof body.responses === "object") {
+    for (const [k, v] of Object.entries(body.responses as Record<string, unknown>)) {
+      if (typeof v === "string" && v.trim()) responses[k] = v.trim().slice(0, 2000);
+    }
+  }
 
   if (!slug || !start || !name) {
     return NextResponse.json({ ok: false, error: "Missing required details." }, { status: 400 });
@@ -80,6 +86,7 @@ export async function POST(request: Request) {
       phone,
       address,
       notes,
+      responses,
     });
   } catch (err) {
     console.error("[book]", err);

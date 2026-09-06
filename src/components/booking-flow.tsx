@@ -5,6 +5,12 @@ import { formatPrice } from "@/lib/consults";
 import type { Consult } from "@/lib/site";
 
 type Slots = Record<string, { start: string }[]>;
+type CustomField = {
+  slug: string;
+  type: string;
+  required: boolean;
+  label: string;
+};
 
 const TZ = "America/Chicago";
 
@@ -30,6 +36,7 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
   );
 
   const [slots, setSlots] = useState<Slots>({});
+  const [fields, setFields] = useState<CustomField[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState("");
   const [chosen, setChosen] = useState<string | null>(null);
@@ -63,6 +70,23 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
   useEffect(() => {
     load();
   }, [load]);
+
+  // Misty's own intake questions, as configured on the event type in Cal.com.
+  useEffect(() => {
+    if (!consult?.calEventTypeId) return;
+    let cancelled = false;
+    fetch(`/api/booking-fields?eventTypeId=${consult.calEventTypeId}`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (!cancelled) setFields(Array.isArray(d.fields) ? d.fields : []);
+      })
+      .catch(() => {
+        if (!cancelled) setFields([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [consult?.calEventTypeId]);
 
   const days = useMemo(
     () => Object.entries(slots).filter(([, v]) => v.length > 0).slice(0, 14),
@@ -195,6 +219,9 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
                   address: fd.get("address"),
                   notes: fd.get("notes"),
                   company: fd.get("company"),
+                  responses: Object.fromEntries(
+                    fields.map((f) => [f.slug, String(fd.get(`custom:${f.slug}`) || "")])
+                  ),
                 }),
               });
               const json = await res.json().catch(() => ({}));
@@ -228,9 +255,34 @@ export function BookingFlow({ consults }: { consults: Consult[] }) {
             )}
           </div>
 
+          {fields.map((f) => (
+            <div key={f.slug}>
+              <label htmlFor={`custom:${f.slug}`} className="block text-sm font-medium text-ink/90">
+                {f.label}
+                {f.required && <span className="text-emerald ml-1">*</span>}
+              </label>
+              {f.type === "textarea" ? (
+                <textarea
+                  id={`custom:${f.slug}`}
+                  name={`custom:${f.slug}`}
+                  required={f.required}
+                  rows={3}
+                  className="mt-2 w-full rounded-sm border border-border bg-cream px-4 py-3 text-base text-ink focus:outline-none focus:border-emerald focus:ring-1 focus:ring-emerald resize-y"
+                />
+              ) : (
+                <input
+                  id={`custom:${f.slug}`}
+                  name={`custom:${f.slug}`}
+                  required={f.required}
+                  className="mt-2 w-full rounded-sm border border-border bg-cream px-4 py-3 text-base text-ink focus:outline-none focus:border-emerald focus:ring-1 focus:ring-emerald"
+                />
+              )}
+            </div>
+          ))}
+
           <div>
             <label htmlFor="notes" className="block text-sm font-medium text-ink/90">
-              What are we working on?
+              Anything else?
             </label>
             <textarea
               id="notes"

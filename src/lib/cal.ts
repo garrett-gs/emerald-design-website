@@ -39,6 +39,7 @@ export type BookingInput = {
   phone?: string;
   address?: string;
   notes?: string;
+  responses?: Record<string, string>;
 };
 
 export async function createBooking(input: BookingInput) {
@@ -63,7 +64,12 @@ export async function createBooking(input: BookingInput) {
   ]
     .filter(Boolean)
     .join("\n");
-  if (detail) body.bookingFieldsResponses = { notes: detail };
+
+  // Custom questions configured on the event type in Cal.com, plus our own
+  // free-text notes in the built-in notes field.
+  const responses: Record<string, string> = { ...(input.responses || {}) };
+  if (detail) responses.notes = detail;
+  if (Object.keys(responses).length) body.bookingFieldsResponses = responses;
 
   const res = await fetch(`${API}/bookings`, {
     method: "POST",
