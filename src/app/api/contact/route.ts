@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { site } from "@/lib/site";
+import { formatPhone } from "@/lib/format";
 
 const apiKey = process.env.RESEND_API_KEY;
 const fromAddress = process.env.EMAIL_FROM || "Emerald Website <onboarding@resend.dev>";
@@ -48,7 +49,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    values[field.key] = value;
+    values[field.key] = field.key === "phone" ? formatPhone(value) : value;
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {

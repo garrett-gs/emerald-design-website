@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getConsults, formatPrice } from "@/lib/consults";
 import { site } from "@/lib/site";
+import { formatPhone } from "@/lib/format";
 
 const apiKey = process.env.RESEND_API_KEY;
 const fromAddress = process.env.EMAIL_FROM || "Emerald Website <onboarding@resend.dev>";
@@ -39,7 +40,7 @@ export async function POST(request: Request) {
   const slug = str("slug");
   const name = str("name");
   const email = str("email");
-  const phone = str("phone");
+  const phone = formatPhone(str("phone"));
   const notes = str("notes").slice(0, 4000);
 
   if (!slug || !name) {
