@@ -24,8 +24,10 @@ const story = [
 export default function AboutPage() {
   return (
     <>
-      <section className="mx-auto max-w-6xl px-6 md:px-10 pt-12 md:pt-20 pb-16 md:pb-20">
-        <div className="grid gap-10 md:gap-16 md:grid-cols-12 items-start">
+      {/* The heading and opening line share the row with the portrait, so the
+          column beside it is not left empty. */}
+      <section className="mx-auto max-w-7xl px-6 md:px-10 pt-12 md:pt-20 pb-14 md:pb-20">
+        <div className="grid gap-10 md:gap-14 md:grid-cols-12 items-center">
           <div className="md:col-span-6">
             <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft mb-6">
               About
@@ -33,8 +35,11 @@ export default function AboutPage() {
             <h1 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-ink">
               About <span className="italic text-emerald">Misty</span>
             </h1>
-            <p className="mt-8 font-display italic text-xl md:text-2xl text-ink/70 leading-snug max-w-xl">
+            <p className="mt-6 font-display italic text-xl md:text-2xl text-ink/70 leading-snug">
               The story behind Emerald Design X Hospitality.
+            </p>
+            <p className="mt-8 font-display italic text-2xl md:text-3xl text-emerald leading-snug">
+              {story[0]}
             </p>
           </div>
           <div className="md:col-span-6">
@@ -51,17 +56,8 @@ export default function AboutPage() {
 
       <section className="mx-auto max-w-3xl px-6 md:px-10 pb-16 md:pb-24">
         <div className="space-y-6 text-lg leading-relaxed text-ink/85">
-          {story.map((paragraph, i) => (
-            <p
-              key={i}
-              className={
-                i === 0
-                  ? "font-display italic text-2xl md:text-3xl text-emerald leading-snug"
-                  : ""
-              }
-            >
-              {paragraph}
-            </p>
+          {story.slice(1).map((paragraph, i) => (
+            <p key={i}>{paragraph}</p>
           ))}
           <p className="pt-4 font-display text-xl text-ink/80">
             — Misty Schmidt
