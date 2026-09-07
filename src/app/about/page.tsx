@@ -26,7 +26,7 @@ export default function AboutPage() {
     <>
       <section className="mx-auto max-w-6xl px-6 md:px-10 pt-12 md:pt-20 pb-16 md:pb-20">
         <div className="grid gap-10 md:gap-16 md:grid-cols-12 items-start">
-          <div className="md:col-span-7">
+          <div className="md:col-span-6">
             <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft mb-6">
               About
             </p>
@@ -37,11 +37,12 @@ export default function AboutPage() {
               The story behind Emerald Design X Hospitality.
             </p>
           </div>
-          <div className="md:col-span-5">
+          <div className="md:col-span-6">
             <SiteImage
               src="/misty.jpeg"
               alt="Misty Schmidt, founder of Emerald Design X Hospitality"
               aspect="square"
+              sizes="(min-width: 768px) 50vw, 100vw"
               priority
             />
           </div>

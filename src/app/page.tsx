@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { CtaButton } from "@/components/cta-button";
 import { SiteImage } from "@/components/site-image";
 import { getConsults, formatPrice } from "@/lib/consults";
@@ -37,31 +38,41 @@ export default async function Home() {
     : "";
   return (
     <>
-      <section className="mx-auto max-w-6xl px-6 md:px-10 pt-12 md:pt-20 pb-16 md:pb-24">
-        <div className="grid gap-10 md:gap-16 md:grid-cols-12 items-center">
-          <div className="md:col-span-7">
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-ink">
-              Hospitality, <span className="italic text-emerald">by design.</span>
-            </h1>
-            <p className="mt-8 text-lg md:text-xl text-ink/80 leading-relaxed max-w-xl">
+      {/* Editorial hero: the copy sets it up, then the photograph carries the
+          page full-bleed rather than sitting in a narrow column beside it. */}
+      <section className="pt-12 md:pt-20">
+        <div className="mx-auto max-w-6xl px-6 md:px-10">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[1.02] text-ink max-w-4xl">
+            Hospitality, <span className="italic text-emerald">by design.</span>
+          </h1>
+          <div className="mt-8 grid gap-8 md:gap-16 md:grid-cols-12 items-start">
+            <p className="md:col-span-7 text-lg md:text-xl text-ink/80 leading-relaxed">
               Short-term rentals designed for the guest — not the owner. I help owners and investors turn properties into places that book solid, photograph beautifully, and earn real five-star reviews.
             </p>
-            <p className="mt-4 text-base md:text-lg text-ink/70 leading-relaxed max-w-xl">
-              From the first walkthrough to the last detail, I run the whole project so the design, the build, and the guest experience all hold together. Because beautiful rooms alone don&apos;t make a successful rental. The whole thing has to.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="md:col-span-5 flex flex-wrap gap-4 md:justify-end">
               <CtaButton href="/contact">Start a conversation</CtaButton>
               <CtaButton href="/services" variant="ghost">See the work</CtaButton>
             </div>
           </div>
-          <div className="md:col-span-5">
-            <SiteImage
+        </div>
+
+        <div className="mt-12 md:mt-16">
+          <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[21/9] overflow-hidden bg-warm">
+            <Image
               src="/hero.png"
               alt="A bonus room designed for guests — mustard sectional, blue accent wall and a bold patterned rug"
-              aspect="photo"
+              fill
+              sizes="100vw"
               priority
+              className="object-cover"
             />
           </div>
+        </div>
+
+        <div className="mx-auto max-w-6xl px-6 md:px-10 pb-16 md:pb-24">
+          <p className="mt-10 md:mt-12 text-base md:text-lg text-ink/70 leading-relaxed max-w-2xl">
+            From the first walkthrough to the last detail, I run the whole project so the design, the build, and the guest experience all hold together. Because beautiful rooms alone don&apos;t make a successful rental. The whole thing has to.
+          </p>
         </div>
       </section>
 

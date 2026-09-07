@@ -146,13 +146,14 @@ export default function ServicesPage() {
                   </ul>
                 </div>
               </div>
-              <div className={`md:col-span-5 ${i % 2 === 0 ? "" : "md:order-1"}`}>
+              <div className={`md:col-span-6 ${i % 2 === 0 ? "" : "md:order-1"}`}>
                 <div className="md:sticky md:top-28">
                   {service.image ? (
                     <SiteImage
                       src={service.image}
                       alt={service.imageAlt ?? service.imageLabel}
                       aspect="photo"
+                      sizes="(min-width: 768px) 50vw, 100vw"
                     />
                   ) : (
                     <ImagePlaceholder label={service.imageLabel} aspect="tall" />
