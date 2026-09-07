@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CtaButton } from "@/components/cta-button";
-import { ImagePlaceholder } from "@/components/image-placeholder";
+import { SiteImage } from "@/components/site-image";
 import { getConsults, formatPrice } from "@/lib/consults";
 
 const services = [
@@ -55,9 +55,11 @@ export default async function Home() {
             </div>
           </div>
           <div className="md:col-span-5">
-            <ImagePlaceholder
-              label="Hero image — designed property exterior or signature interior detail"
-              aspect="hero"
+            <SiteImage
+              src="/hero.png"
+              alt="A bonus room designed for guests — mustard sectional, blue accent wall and a bold patterned rug"
+              aspect="photo"
+              priority
             />
           </div>
         </div>
