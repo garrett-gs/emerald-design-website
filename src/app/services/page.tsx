@@ -114,7 +114,7 @@ export default function ServicesPage() {
         >
           <div className="mx-auto max-w-6xl px-6 md:px-10 py-20 md:py-28">
             <div className="grid gap-10 md:gap-16 md:grid-cols-12 items-start">
-              <div className={`md:col-span-7 ${i % 2 === 0 ? "" : "md:order-2"}`}>
+              <div className={`md:col-span-6 ${i % 2 === 0 ? "" : "md:order-2"}`}>
                 <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft">
                   {service.number}
                 </p>
