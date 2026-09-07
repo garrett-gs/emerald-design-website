@@ -38,6 +38,9 @@ const services: Service[] = [
       "A go / no-go recommendation, with reasons",
     ],
     imageLabel: "Property walkthrough — exterior or signature room",
+    image: "/service-read.png",
+    imageAlt:
+      "A dining room with a live-edge table, leather chairs and full-height wood-framed mirrors",
   },
   {
     number: "02",
