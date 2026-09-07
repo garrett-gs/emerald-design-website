@@ -75,6 +75,9 @@ const services: Service[] = [
       "A property that doesn't just look good — it performs",
     ],
     imageLabel: "Welcome detail — a small, signature touch from a finished project",
+    image: "/service-guest.jpeg",
+    imageAlt:
+      "Nine vintage LIFE magazine covers mounted in acrylic frames on a wall",
   },
 ];
 
