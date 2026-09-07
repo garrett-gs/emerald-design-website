@@ -112,9 +112,9 @@ export default function ServicesPage() {
           key={service.number}
           className={i % 2 === 0 ? "bg-cream" : "bg-warm/30"}
         >
-          <div className="mx-auto max-w-6xl px-6 md:px-10 py-20 md:py-28">
-            <div className="grid gap-10 md:gap-16 md:grid-cols-12 items-start">
-              <div className={`md:col-span-6 ${i % 2 === 0 ? "" : "md:order-2"}`}>
+          <div className="mx-auto max-w-7xl px-6 md:px-10 py-20 md:py-28">
+            <div className="grid gap-10 md:gap-14 md:grid-cols-12 items-start">
+              <div className={`md:col-span-5 ${i % 2 === 0 ? "" : "md:order-2"}`}>
                 <p className="text-xs uppercase tracking-[0.2em] text-emerald-soft">
                   {service.number}
                 </p>
@@ -146,14 +146,14 @@ export default function ServicesPage() {
                   </ul>
                 </div>
               </div>
-              <div className={`md:col-span-6 ${i % 2 === 0 ? "" : "md:order-1"}`}>
+              <div className={`md:col-span-7 ${i % 2 === 0 ? "" : "md:order-1"}`}>
                 <div className="md:sticky md:top-28">
                   {service.image ? (
                     <SiteImage
                       src={service.image}
                       alt={service.imageAlt ?? service.imageLabel}
                       aspect="photo"
-                      sizes="(min-width: 768px) 50vw, 100vw"
+                      sizes="(min-width: 768px) 58vw, 100vw"
                     />
                   ) : (
                     <ImagePlaceholder label={service.imageLabel} aspect="tall" />
