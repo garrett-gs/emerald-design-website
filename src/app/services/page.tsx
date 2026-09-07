@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CtaButton } from "@/components/cta-button";
 import { ImagePlaceholder } from "@/components/image-placeholder";
+import { SiteImage } from "@/components/site-image";
 
 export const metadata = {
   title: "Services",
@@ -8,7 +9,19 @@ export const metadata = {
     "A whole-property approach to short-term rentals — from acquisition to five-star reviews. Property reads, interior design, and guest experience.",
 };
 
-const services = [
+type Service = {
+  number: string;
+  title: string;
+  tagline: string;
+  body: string[];
+  walkAway: string[];
+  imageLabel: string;
+  /** Present once a real photograph exists for this service. */
+  image?: string;
+  imageAlt?: string;
+};
+
+const services: Service[] = [
   {
     number: "01",
     title: "Property Reads & Assessment",
@@ -42,6 +55,9 @@ const services = [
       "A project that runs smoothly, without you stuck in the middle",
     ],
     imageLabel: "Designed interior — rich color, layered texture, considered detail",
+    image: "/service-design.png",
+    imageAlt:
+      "A dining room with flamingo wallpaper, a terracotta ceiling and a round oak table",
   },
   {
     number: "03",
@@ -129,7 +145,15 @@ export default function ServicesPage() {
               </div>
               <div className={`md:col-span-5 ${i % 2 === 0 ? "" : "md:order-1"}`}>
                 <div className="md:sticky md:top-28">
-                  <ImagePlaceholder label={service.imageLabel} aspect="tall" />
+                  {service.image ? (
+                    <SiteImage
+                      src={service.image}
+                      alt={service.imageAlt ?? service.imageLabel}
+                      aspect="photo"
+                    />
+                  ) : (
+                    <ImagePlaceholder label={service.imageLabel} aspect="tall" />
+                  )}
                 </div>
               </div>
             </div>
