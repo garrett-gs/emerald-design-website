@@ -1,5 +1,5 @@
 import { CtaButton } from "@/components/cta-button";
-import { ImagePlaceholder } from "@/components/image-placeholder";
+import { SiteImage } from "@/components/site-image";
 
 export const metadata = {
   title: "About Misty",
@@ -38,9 +38,11 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="md:col-span-5">
-            <ImagePlaceholder
-              label="Portrait of Misty Schmidt — at a property, in studio, or on site"
-              aspect="hero"
+            <SiteImage
+              src="/misty.jpeg"
+              alt="Misty Schmidt, founder of Emerald Design X Hospitality"
+              aspect="square"
+              priority
             />
           </div>
         </div>
