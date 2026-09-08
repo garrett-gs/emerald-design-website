@@ -43,11 +43,11 @@ export default async function Home() {
       <section className="pt-12 md:pt-20">
         <div className="mx-auto max-w-6xl px-6 md:px-10">
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[1.02] text-ink max-w-4xl">
-            Hospitality, <span className="italic text-emerald">by design.</span>
+            Make them want to <span className="italic text-emerald">stay awhile…</span>
           </h1>
           <div className="mt-8 grid gap-8 md:gap-16 md:grid-cols-12 items-start">
             <p className="md:col-span-7 text-lg md:text-xl text-ink/80 leading-relaxed">
-              Short-term rentals designed for the guest — not the owner. I help owners and investors turn properties into places that book solid, photograph beautifully, and earn real five-star reviews.
+              I think good hospitality starts with how a space makes you feel. So I design welcoming, memorable spaces with a hospitality mindset — from vacation rentals and hospitality spaces to room transformations in your home.
             </p>
             <div className="md:col-span-5 flex flex-wrap gap-4 md:justify-end">
               <CtaButton href="/contact">Start a conversation</CtaButton>
@@ -70,9 +70,14 @@ export default async function Home() {
         </div>
 
         <div className="mx-auto max-w-6xl px-6 md:px-10 pb-16 md:pb-24">
-          <p className="mt-10 md:mt-12 text-base md:text-lg text-ink/70 leading-relaxed max-w-2xl">
-            From the first walkthrough to the last detail, I run the whole project so the design, the build, and the guest experience all hold together. Because beautiful rooms alone don&apos;t make a successful rental. The whole thing has to.
-          </p>
+          <div className="mt-10 md:mt-12 max-w-2xl space-y-6">
+            <p className="font-display italic text-xl md:text-2xl text-emerald leading-snug">
+              Whether I&apos;m designing for a guest, a customer, or a homeowner, the goal is the same: create a space people want to be in.
+            </p>
+            <p className="text-base md:text-lg text-ink/70 leading-relaxed">
+              So I start with the experience: How should people feel? What do they need? What will make them stay a little longer? Then I bring it all together through thoughtful layout, color, furniture, lighting, styling, and the details.
+            </p>
+          </div>
         </div>
       </section>
 
