@@ -5,7 +5,7 @@ import { nav, site } from "@/lib/site";
 export function SiteHeader() {
   return (
     <header className="border-b border-border/60 bg-cream/90 backdrop-blur supports-[backdrop-filter]:bg-cream/70 sticky top-0 z-40">
-      <div className="mx-auto max-w-6xl px-6 md:px-10 h-24 md:h-32 flex items-center justify-between gap-6">
+      <div className="mx-auto max-w-6xl px-6 md:px-10 h-16 sm:h-20 md:h-28 flex items-center justify-between gap-4 sm:gap-6">
         <Link
           href="/"
           aria-label={`${site.name} home`}
@@ -17,7 +17,8 @@ export function SiteHeader() {
             width={3281}
             height={698}
             priority
-            className="h-20 md:h-24 w-auto"
+            sizes="(min-width: 1024px) 420px, (min-width: 640px) 300px, 200px"
+            className="h-10 sm:h-14 md:h-16 lg:h-20 w-auto"
           />
         </Link>
         <nav className="flex items-center gap-6 md:gap-8 text-sm">
